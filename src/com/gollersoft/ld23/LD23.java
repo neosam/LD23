@@ -21,12 +21,7 @@ import java.rmi.activation.UnknownGroupException;
 public class LD23 {
     public static void main(String[] args) {
         final UG ug = new UGSwing(800, 600);
-        final UGScene scene = new UGScene(ug);
-        final UGImage img = ug.getImage("stupidimage.png");
-        final UGImage spriteImage = ug.getImage("sprites.png");
-        scene.addLayer(new UGImageScrollLayer(img, scene.getCamera()));
-        scene.addLayer(new UGSpriteLayer(ug, scene.getCamera()));
-
+        final UGScene scene = new GameScene(ug);
 
 
         final JFrame frame = new JFrame("Ludum Dare 23");
