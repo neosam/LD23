@@ -28,17 +28,20 @@ public class GameScene extends UGScene {
     private final UGImage spriteImage;
     private final UGSpriteLayer spriteLayer;
     private final UGImageScrollLayer backgroundLayer;
+    private final GameState state;
 
 
     public GameScene(UG ug) {
         super(ug);
         this.ug = ug;
 
+        state = new GameState();
         backgroundLayer = new UGImageScrollLayer(ug.getImage("backgroundskin.png"), getCamera());
         spriteImage = ug.getImage("sprites.png");
         spriteLayer = new UGSpriteLayer(ug, getCamera());
         addLayer(backgroundLayer);
         addLayer(spriteLayer);
+        addLayer(new StateDisplayLayer(state));
         new SpriteAnimator().register(this);
         ug.setMouseDelegate(new UGMouseDelegate() {
             @Override
