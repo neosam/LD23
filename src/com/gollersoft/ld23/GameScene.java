@@ -49,8 +49,15 @@ public class GameScene extends UGScene {
                 System.out.println(getSpriteAt(event.x, event.y));
             }
         });
+        registerPerFrameAction(new Runnable() {
+            @Override
+            public void run() {
+                state.step();
+            }
+        });
 
-
+        state.setCheese(10000);
+        state.setWater(10000);
         addHQ(302, 250);
     }
 
@@ -71,6 +78,7 @@ public class GameScene extends UGScene {
     public void addHQ(int x, int y) {
         UGSprite sprite = createSprite(x, y, 0, 64, 64, 64, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("hq");
+        state.hqAdded();
     }
 
     public void addPore(int x, int y) {

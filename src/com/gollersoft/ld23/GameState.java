@@ -10,14 +10,22 @@ package com.gollersoft.ld23;
 public class GameState {
     private int cheese;
     private int water;
-
-    public GameState(int cheese, int water) {
-        this.cheese = cheese;
-        this.water = water;
-    }
+    private int cheeseProduction;
+    private int waterProduction;
 
     public GameState() {
     }
+
+    public void step() {
+        cheese += cheeseProduction;
+        water += waterProduction;
+    }
+
+    public void hqAdded() {
+        waterProduction -= 1;
+        cheeseProduction -= 1;
+    }
+
 
     public int getCheese() {
         return cheese;
@@ -33,5 +41,21 @@ public class GameState {
 
     public void setWater(int water) {
         this.water = water;
+    }
+
+    public int getCheeseProduction() {
+        return cheeseProduction;
+    }
+
+    public void setCheeseProduction(int cheeseProduction) {
+        this.cheeseProduction = cheeseProduction;
+    }
+
+    public int getWaterProduction() {
+        return waterProduction;
+    }
+
+    public void setWaterProduction(int waterProduction) {
+        this.waterProduction = waterProduction;
     }
 }
