@@ -51,10 +51,7 @@ public class GameScene extends UGScene {
         });
 
 
-        addHQ(30, 50);
-        addPore(130, 50);
-        addTranspare(190, 80);
-        addInfector(60, 140);
+        addHQ(302, 250);
     }
 
     public UGSprite createSprite(int x, int y, int animX, int animY, int animWidth, int animHeight, int animOffset,
