@@ -1,12 +1,17 @@
 package com.gollersoft.ld23;
 
+import com.gollersoft.jultragame.collision.Collision;
 import com.gollersoft.jultragame.core.UG;
+import com.gollersoft.jultragame.core.UGFinalPoint;
 import com.gollersoft.jultragame.core.UGFinalRect;
 import com.gollersoft.jultragame.core.UGPoint;
 import com.gollersoft.jultragame.core.display.UGImage;
+import com.gollersoft.jultragame.core.event.UGMouseClickEvent;
+import com.gollersoft.jultragame.core.event.UGMouseDelegate;
 import com.gollersoft.jultragame.layer.UGImageScrollLayer;
 import com.gollersoft.jultragame.layer.UGSpriteLayer;
 import com.gollersoft.jultragame.scene.UGScene;
+import com.gollersoft.jultragame.scene.UGSpritePool;
 import com.gollersoft.jultragame.sprite.UGSprite;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimation;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimationStorage;
@@ -35,6 +40,12 @@ public class GameScene extends UGScene {
         addLayer(backgroundLayer);
         addLayer(spriteLayer);
         new SpriteAnimator().register(this);
+        ug.setMouseDelegate(new UGMouseDelegate() {
+            @Override
+            public void mouseClicked(UGMouseClickEvent event) {
+                System.out.println(getSpriteAt(event.x, event.y));
+            }
+        });
 
 
         addHQ(30, 50);
@@ -76,5 +87,16 @@ public class GameScene extends UGScene {
     public void addInfector(int x, int y) {
         UGSprite sprite = createSprite(x, y, 0, 128, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("infector");
+    }
+
+    public UGSprite getSpriteAt(int x, int y) {
+        final UGSpritePool spritePool = getSpritePool();
+        final int length = spritePool.size();
+        for (int i = 0; i < length; i++) {
+            final UGSprite sprite = spritePool.at(i);
+            if (Collision.pointInRect(new UGFinalPoint(x, y), sprite.getSpriteRect()))
+                return sprite;
+        }
+        return null;
     }
 }
