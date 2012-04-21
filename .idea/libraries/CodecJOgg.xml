@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="CodecJOgg">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/CodecJOgg.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/CodecJOrbis.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/CodecWav.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/LibraryJavaSound.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/SoundSystem.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
