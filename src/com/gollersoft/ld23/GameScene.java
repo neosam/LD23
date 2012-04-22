@@ -31,6 +31,7 @@ public class GameScene extends UGScene {
     private final UGImage spriteImage;
     private final UGSpriteLayer spriteLayer;
     private final UGImageScrollLayer backgroundLayer;
+    private final AntController antController;
     private final GameState state;
     private final int pores = 6;
 
@@ -95,10 +96,13 @@ public class GameScene extends UGScene {
             }
         });
 
+        antController = new AntController(ug);
+        registerPerFrameAction(antController);
+
         state.setCheese(10000);
         state.setWater(10000);
         addHQ(302, 250);
-        addAnt(400, 400);
+        addAnt(-20, -20, getSpritePool().at(0));
 
         for (int i = 0; i < pores; i++)
             addPore((int) (Math.random() * 700), (int) (Math.random() * 500));
@@ -121,12 +125,14 @@ public class GameScene extends UGScene {
     public void addHQ(int x, int y) {
         UGSprite sprite = createSprite(x, y, 0, 64, 64, 64, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("hq");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
         state.hqAdded();
     }
 
     public void addPore(int x, int y) {
         UGSprite sprite = createSprite(x, y, 64, 64, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("pore");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
         UGSpriteAnimation animation = new UGSpriteAnimation(new UGFinalRect(96, 64, 32, 32),
                 0, 1);
         sprite.getAnimationStorage().put("infected", animation);
@@ -140,6 +146,7 @@ public class GameScene extends UGScene {
         animation.setNext(10);
         sprite.getAnimationStorage().put("infected", animation);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("transpore");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
         sprite.setAnimation("default");
 
         if (isNearOf(x, y, "infectedpore", 64)) {
@@ -154,6 +161,7 @@ public class GameScene extends UGScene {
     public void addInfector(int x, int y) {
         UGSprite sprite = createSprite(x, y, 0, 128, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("infector");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
         UGList<UGSprite> pores = spritesNearOf(x, y, "pore", 64);
         final int size = pores.size();
         int transporeCounter = 0;
@@ -174,9 +182,10 @@ public class GameScene extends UGScene {
         state.infectorAdded(transporeCounter);
     }
 
-    public void addAnt(int x, int y) {
+    public void addAnt(int x, int y, UGSprite destination) {
         UGSprite sprite = createSprite(x, y, 0, 160, 32, 16, 0, 2, 3);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("ant");
+        antController.addAnt(new Antity(sprite, destination));
     }
 
     public UGSprite getSpriteAt(int x, int y) {
