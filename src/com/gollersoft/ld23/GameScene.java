@@ -58,10 +58,24 @@ public class GameScene extends UGScene {
                     JPopupMenu buildPopup = new JPopupMenu();
                     JMenuItem buildHQ = new JMenuItem("Build HQ");
                     buildPopup.add(buildHQ);
-                    JMenuItem buildTranspore = new JMenuItem("Build Transpore");
-                    buildPopup.add(buildTranspore);
-                    JMenuItem buildInfector = new JMenuItem("Build Infector");
-                    buildPopup.add(buildInfector);
+                    if (isNearOf(event.x, event.y, "pore", 64)) {
+                        JMenuItem buildTranspore = new JMenuItem("Build Transpore");
+                        buildPopup.add(buildTranspore);
+                        JMenuItem buildInfector = new JMenuItem("Build Infector");
+                        buildPopup.add(buildInfector);
+                        buildTranspore.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent actionEvent) {
+                                addTranspare(event.x, event.y);
+                            }
+                        });
+                        buildInfector.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent actionEvent) {
+                                addInfector(event.x, event.y);
+                            }
+                        });
+                    }
                     buildPopup.show((Component) ug.display.getElement(), event.x, event.y);
 
                     buildHQ.addActionListener(new ActionListener() {
@@ -70,18 +84,7 @@ public class GameScene extends UGScene {
                             addHQ(event.x, event.y);
                         }
                     });
-                    buildTranspore.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent actionEvent) {
-                            addTranspare(event.x, event.y);
-                        }
-                    });
-                    buildInfector.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent actionEvent) {
-                            addInfector(event.x, event.y);
-                        }
-                    });
+
                 }
             }
         });

@@ -20,7 +20,9 @@ import com.gollersoft.jultragame.scene.UGSpritePoolItem;
 public class BuildAreaLayer implements UGLayer {
     private final UGSpritePool spritePool;
     private final UGColor color = new UGColor(128, 128, 128, 128);
+    private final UGColor poreColor = new UGColor(0, 255, 0, 128);
     private final int radius = 128;
+    private final int poreRadius = 64;
 
     public BuildAreaLayer(UGSpritePool spritePool) {
         this.spritePool = spritePool;
@@ -34,7 +36,14 @@ public class BuildAreaLayer implements UGLayer {
             final UGFinalRect position = hqs.at(i).getSprite().getSpriteRect();
             g.fillCircle(position.x + (position.width >> 1), position.y + (position.height >> 1), radius, color);
         }
+        final UGList<UGSpritePoolItem> pores = spritePool.getSpritePoolItemsWithLabel("pore");
+        final int size2 = pores.size();
+        for (int i = 0; i < size2; i++) {
+            final UGFinalRect position = pores.at(i).getSprite().getSpriteRect();
+            g.fillCircle(position.x + (position.width >> 1), position.y + (position.height >> 1), poreRadius, poreColor);
+        }
     }
+
 
     @Override
     public void frame() {
