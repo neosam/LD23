@@ -108,7 +108,7 @@ public class GameScene extends UGScene {
         animation.setNext(animationSpeed);
         hqAnimationStorage.put("default", animation);
         UGSprite sprite = new UGSprite(spriteImage, hqAnimationStorage);
-        sprite.setPos(new UGPoint(x, y));
+        sprite.setPos(new UGPoint(x - animWidth / 2, y - animHeight / 2));
         spriteLayer.add(sprite);
         registerSprite(sprite);
         return sprite;
