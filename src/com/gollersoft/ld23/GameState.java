@@ -86,6 +86,4 @@ public class GameState {
     public void setWaterProduction(int waterProduction) {
         this.waterProduction = waterProduction;
     }
-
-
 }

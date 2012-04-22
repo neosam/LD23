@@ -54,7 +54,7 @@ public class GameScene extends UGScene {
             public void mouseClicked(final UGMouseClickEvent event) {
                 UGSprite sprite = getSpriteAt(event.x, event.y);
                 if (sprite == null) {
-                    if (!isNearOf(event.x, event.y, "hq", 128))
+                    if (!isNearOf(event.x, event.y, "hq", 128) || state.getCheese() <= 0 || state.getWater() <= 0)
                         return;
                     JPopupMenu buildPopup = new JPopupMenu();
                     JMenuItem buildHQ = new JMenuItem("Build HQ");
@@ -316,6 +316,7 @@ public class GameScene extends UGScene {
                 }
             }
         }
+        recreateProduction();
     }
 
     private void destroyMisplaced() {
@@ -330,5 +331,14 @@ public class GameScene extends UGScene {
                 removeSprite(sprite, false);
             }
         }
+    }
+
+    public void recreateProduction() {
+        int hqs = getSpritePool().getSpritePoolItemsWithLabel("hq").size();
+        int infectedTranspore = getSpritePool().getSpritePoolItemsWithLabel("infected").size();
+        int transpore = getSpritePool().getSpritePoolItemsWithLabel("transpore").size() - infectedTranspore;
+        state.setCheeseProduction(infectedTranspore * 2 - hqs * 10);
+        state.setWaterProduction(transpore * 2 - hqs * 10);
+
     }
 }

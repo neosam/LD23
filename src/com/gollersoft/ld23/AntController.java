@@ -49,8 +49,8 @@ public class AntController implements Runnable {
     }
 
     public void maybeAddAnAnt() {
-        long timePlayed = (System.currentTimeMillis() - starttime) / 10000;
-        if (timePlayed > (int)(Math.random() * 1000)) {
+        long timePlayed = (System.currentTimeMillis() - starttime) / 3000;
+        if (timePlayed > (int)(Math.random() * 3000)) {
             String dest = "transpore";
             if (Math.random() > 0.5)
                 dest = "hq";
