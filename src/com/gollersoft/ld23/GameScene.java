@@ -40,6 +40,7 @@ public class GameScene extends UGScene {
         spriteImage = ug.getImage("sprites.png");
         spriteLayer = new UGSpriteLayer(ug, getCamera());
         addLayer(backgroundLayer);
+        addLayer(new BuildAreaLayer(getSpritePool()));
         addLayer(spriteLayer);
         addLayer(new StateDisplayLayer(state));
         new SpriteAnimator().register(this);
