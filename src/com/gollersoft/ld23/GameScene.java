@@ -53,7 +53,7 @@ public class GameScene extends UGScene {
             public void mouseClicked(final UGMouseClickEvent event) {
                 UGSprite sprite = getSpriteAt(event.x, event.y);
                 if (sprite == null) {
-                    if (!isInBuildArea(event.x, event.y))
+                    if (!isNearOf(event.x, event.y, "hq", 128))
                         return;
                     JPopupMenu buildPopup = new JPopupMenu();
                     JMenuItem buildHQ = new JMenuItem("Build HQ");
@@ -147,9 +147,8 @@ public class GameScene extends UGScene {
         return null;
     }
 
-    public boolean isInBuildArea(int x, int y) {
-        final int radius = 128;
-        final UGList<UGSpritePoolItem> hqs = getSpritePool().getSpritePoolItemsWithLabel("hq");
+    public boolean isNearOf(int x, int y, String label, int radius) {
+        final UGList<UGSpritePoolItem> hqs = getSpritePool().getSpritePoolItemsWithLabel(label);
         final int size = hqs.size();
         for (int i = 0; i < size; i++) {
             final UGSprite sprite = hqs.at(i).getSprite();
