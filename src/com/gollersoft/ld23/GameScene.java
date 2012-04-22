@@ -1,10 +1,7 @@
 package com.gollersoft.ld23;
 
 import com.gollersoft.jultragame.collision.Collision;
-import com.gollersoft.jultragame.core.UG;
-import com.gollersoft.jultragame.core.UGFinalPoint;
-import com.gollersoft.jultragame.core.UGFinalRect;
-import com.gollersoft.jultragame.core.UGPoint;
+import com.gollersoft.jultragame.core.*;
 import com.gollersoft.jultragame.core.display.UGImage;
 import com.gollersoft.jultragame.core.event.UGMouseClickEvent;
 import com.gollersoft.jultragame.core.event.UGMouseDelegate;
@@ -12,6 +9,7 @@ import com.gollersoft.jultragame.layer.UGImageScrollLayer;
 import com.gollersoft.jultragame.layer.UGSpriteLayer;
 import com.gollersoft.jultragame.scene.UGScene;
 import com.gollersoft.jultragame.scene.UGSpritePool;
+import com.gollersoft.jultragame.scene.UGSpritePoolItem;
 import com.gollersoft.jultragame.sprite.UGSprite;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimation;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimationStorage;
@@ -55,6 +53,8 @@ public class GameScene extends UGScene {
             public void mouseClicked(final UGMouseClickEvent event) {
                 UGSprite sprite = getSpriteAt(event.x, event.y);
                 if (sprite == null) {
+                    if (!isInBuildArea(event.x, event.y))
+                        return;
                     JPopupMenu buildPopup = new JPopupMenu();
                     JMenuItem buildHQ = new JMenuItem("Build HQ");
                     buildPopup.add(buildHQ);
@@ -145,5 +145,21 @@ public class GameScene extends UGScene {
                 return sprite;
         }
         return null;
+    }
+
+    public boolean isInBuildArea(int x, int y) {
+        final int radius = 128;
+        final UGList<UGSpritePoolItem> hqs = getSpritePool().getSpritePoolItemsWithLabel("hq");
+        final int size = hqs.size();
+        for (int i = 0; i < size; i++) {
+            final UGSprite sprite = hqs.at(i).getSprite();
+            final int spriteX = sprite.getSpriteRect().x + sprite.getSpriteRect().width / 2;
+            final int spriteY = sprite.getSpriteRect().y + sprite.getSpriteRect().height / 2;
+            final int diffX = x - spriteX;
+            final int diffY = y - spriteY;
+            if (diffX * diffX + diffY * diffY < radius * radius)
+                return true;
+        }
+        return false;
     }
 }
