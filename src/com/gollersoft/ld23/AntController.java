@@ -50,7 +50,7 @@ public class AntController implements Runnable {
 
     public void maybeAddAnAnt() {
         long timePlayed = (System.currentTimeMillis() - starttime) / 3000;
-        if (timePlayed > (int)(Math.random() * 3000)) {
+        if (timePlayed > (int)(Math.random() * 7000)) {
             String dest = "transpore";
             if (Math.random() > 0.5)
                 dest = "hq";
@@ -60,7 +60,19 @@ public class AntController implements Runnable {
             if (possibleGoals.size() == 0)
                 return;
             UGSprite destSprite = possibleGoals.at((int) (Math.random() * possibleGoals.size())).getSprite();
-            gameScene.addAnt(-20, -20, destSprite);
+            double randomVal = Math.random();
+            if (randomVal < 0.25) {
+                gameScene.addAnt(-20, -20, destSprite);
+            }
+            else if (randomVal < 0.5) {
+                gameScene.addAnt(820, -20, destSprite);
+            }
+            else if (randomVal < 0.75) {
+                gameScene.addAnt(820, 620, destSprite);
+            }
+            else {
+                gameScene.addAnt(-20, 620, destSprite);
+            }
         }
     }
 
