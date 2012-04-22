@@ -12,6 +12,7 @@ public class GameState {
     private int water;
     private int cheeseProduction;
     private int waterProduction;
+    private int score = 0;
 
     public GameState() {
     }
@@ -85,5 +86,13 @@ public class GameState {
 
     public void setWaterProduction(int waterProduction) {
         this.waterProduction = waterProduction;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

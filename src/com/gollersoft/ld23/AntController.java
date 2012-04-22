@@ -52,7 +52,7 @@ public class AntController implements Runnable {
 
     public void maybeAddAnAnt() {
         long timePlayed = (System.currentTimeMillis() - starttime) / levelupSpeed;
-        if (timePlayed > (int)(Math.random() * amountOfAnts)) {
+        if (Math.pow(1.3, timePlayed) > (int)(Math.random() * amountOfAnts)) {
             String dest = "transpore";
             if (Math.random() > 0.9)
                 dest = "hq";

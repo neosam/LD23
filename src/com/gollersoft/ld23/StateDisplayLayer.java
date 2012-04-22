@@ -15,9 +15,11 @@ public class StateDisplayLayer implements UGLayer {
     private final GameState gameState;
     private final UGColor color = new UGColor(0, 0, 0);
     private final UGColor rectColor = new UGColor(255, 255, 255, 64);
+    private final long starttime;
 
     public StateDisplayLayer(GameState gameState) {
         this.gameState = gameState;
+        starttime = System.currentTimeMillis();
     }
 
     @Override
@@ -27,7 +29,8 @@ public class StateDisplayLayer implements UGLayer {
         g.drawString("Water: " + gameState.getWater(), 200, 10, color);
         g.drawString("Usage: " + gameState.getCheeseProduction() * 30, 10, 20, color);
         g.drawString("Usage: " + gameState.getWaterProduction() * 30, 200, 20, color);
-
+        g.drawString("Time: " + (System.currentTimeMillis() - starttime) / 1000, 400, 10, color);
+        g.drawString("Score: " + (gameState.getScore() * 25), 400, 20, color);
     }
 
     @Override
