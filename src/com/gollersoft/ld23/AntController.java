@@ -11,8 +11,10 @@ import com.gollersoft.jultragame.core.*;
  */
 public class AntController implements Runnable {
     final private UGList<Antity> antities;
+    final private GameScene gameScene;
 
-    public AntController(UG ug) {
+    public AntController(UG ug, GameScene gameScene) {
+        this.gameScene = gameScene;
         antities = ug.createList();
 
     }
@@ -36,6 +38,11 @@ public class AntController implements Runnable {
                 antPos.y++;
             else if (diffY < 0)
                 antPos.y--;
+            if (diffX == 0 && diffY == 0) {
+                gameScene.antAttack(antity);
+                antities.remove(antity);
+            }
+
             System.out.println(antity.antSprite.getPos());
         }
     }

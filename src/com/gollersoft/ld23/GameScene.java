@@ -87,6 +87,10 @@ public class GameScene extends UGScene {
                     });
 
                 }
+                else {
+                    if (event.button == 2)
+                        removeSprite(sprite, false);
+                }
             }
         });
         registerPerFrameAction(new Runnable() {
@@ -96,7 +100,7 @@ public class GameScene extends UGScene {
             }
         });
 
-        antController = new AntController(ug);
+        antController = new AntController(ug, this);
         registerPerFrameAction(antController);
 
         state.setCheese(10000);
@@ -132,7 +136,6 @@ public class GameScene extends UGScene {
     public void addPore(int x, int y) {
         UGSprite sprite = createSprite(x, y, 64, 64, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("pore");
-        getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
         UGSpriteAnimation animation = new UGSpriteAnimation(new UGFinalRect(96, 64, 32, 32),
                 0, 1);
         sprite.getAnimationStorage().put("infected", animation);
@@ -147,6 +150,7 @@ public class GameScene extends UGScene {
         sprite.getAnimationStorage().put("infected", animation);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("transpore");
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("misplaced");
         sprite.setAnimation("default");
 
         if (isNearOf(x, y, "infectedpore", 64)) {
@@ -162,6 +166,7 @@ public class GameScene extends UGScene {
         UGSprite sprite = createSprite(x, y, 0, 128, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("infector");
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("player");
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("misplaced");
         UGList<UGSprite> pores = spritesNearOf(x, y, "pore", 64);
         final int size = pores.size();
         int transporeCounter = 0;
@@ -228,5 +233,40 @@ public class GameScene extends UGScene {
                 res.add(sprite);
         }
         return res;
+    }
+
+    public void antAttack(Antity antity) {
+        spriteLayer.remove(antity.antSprite);
+        getSpritePool().remove(antity.antSprite);
+        removeSprite(antity.destination, true);
+    }
+
+    private void removeSprite(UGSprite destination, boolean explosion) {
+        UGSpritePoolItem item = getSpritePool().getSpritePoolItem(destination);
+        UGList<String> labels = item.getLabels();
+        spriteLayer.remove(destination);
+        getSpritePool().remove(destination);
+        int size = labels.size();
+        for (int i = 0; i < size; i++) {
+            final String label = labels.at(i);
+            if (label.equals("hq")) {
+                state.hqRemoved();
+                destroyMisplaced();
+            }
+        }
+    }
+
+    private void destroyMisplaced() {
+        System.out.println("Destroy misplaced");
+        UGList<UGSpritePoolItem> sprites = getSpritePool().getSpritePoolItemsWithLabel("misplaced");
+        int size1 = sprites.size();
+        System.out.println("Checking " + size1 + " sprites");
+        for (int i = 0; i < size1; i++) {
+            UGSprite sprite = sprites.at(i).getSprite();
+            UGFinalRect rect = sprite.getSpriteRect();
+            if (!isNearOf(rect.x + rect.width / 2, rect.y + rect.height / 2, "hq", 128)) {
+                removeSprite(sprite, false);
+            }
+        }
     }
 }

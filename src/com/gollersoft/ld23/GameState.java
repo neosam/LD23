@@ -25,18 +25,32 @@ public class GameState {
         waterProduction -= 1;
         cheeseProduction -= 1;
     }
+    public void hqRemoved() {
+        waterProduction += 1;
+        cheeseProduction += 1;
+    }
 
     public void transporeAdded() {
         waterProduction += 2;
+    }
+    public void transporeRemoved() {
+        waterProduction -= 2;
     }
 
     public void infectedTransporeAdded() {
         cheeseProduction += 2;
     }
+    public void infectedTransporeRemoved() {
+        cheeseProduction -= 2;
+    }
 
     public void infectorAdded(int transformedTranspored) {
         waterProduction -= 2 * transformedTranspored;
         cheeseProduction += 2 * transformedTranspored;
+    }
+    public void infectorRemoved(int transformedTranspored) {
+        waterProduction += 2 * transformedTranspored;
+        cheeseProduction -= 2 * transformedTranspored;
     }
 
     public int getCheese() {
@@ -70,4 +84,6 @@ public class GameState {
     public void setWaterProduction(int waterProduction) {
         this.waterProduction = waterProduction;
     }
+
+
 }
