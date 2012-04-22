@@ -14,6 +14,7 @@ import com.gollersoft.jultragame.layer.UGLayer;
 public class StateDisplayLayer implements UGLayer {
     private final GameState gameState;
     private final UGColor color = new UGColor(0, 0, 0);
+    private final UGColor rectColor = new UGColor(255, 255, 255, 64);
 
     public StateDisplayLayer(GameState gameState) {
         this.gameState = gameState;
@@ -21,7 +22,12 @@ public class StateDisplayLayer implements UGLayer {
 
     @Override
     public void draw(UGGraphics g) {
-        g.drawString("Cheese: " + gameState.getCheese() + "    -     Water: " + gameState.getWater(), 30, 30, color);
+        g.fillRect(0, 0, 800, 24, rectColor);
+        g.drawString("Cheese: " + gameState.getCheese(), 10, 10, color);
+        g.drawString("Water: " + gameState.getWater(), 100, 10, color);
+        g.drawString("Usage: " + gameState.getCheeseProduction() * 30, 10, 20, color);
+        g.drawString("Usage: " + gameState.getWaterProduction() * 30, 100, 20, color);
+
     }
 
     @Override
