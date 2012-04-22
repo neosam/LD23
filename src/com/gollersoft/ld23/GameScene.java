@@ -16,6 +16,11 @@ import com.gollersoft.jultragame.sprite.UGSprite;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimation;
 import com.gollersoft.jultragame.sprite.UGSpriteAnimationStorage;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * Created with IntelliJ IDEA.
  * User: neosam-code
@@ -32,7 +37,7 @@ public class GameScene extends UGScene {
     private final int pores = 6;
 
 
-    public GameScene(UG ug) {
+    public GameScene(final UG ug) {
         super(ug);
         this.ug = ug;
 
@@ -47,8 +52,37 @@ public class GameScene extends UGScene {
         new SpriteAnimator().register(this);
         ug.setMouseDelegate(new UGMouseDelegate() {
             @Override
-            public void mouseClicked(UGMouseClickEvent event) {
-                System.out.println(getSpriteAt(event.x, event.y));
+            public void mouseClicked(final UGMouseClickEvent event) {
+                UGSprite sprite = getSpriteAt(event.x, event.y);
+                if (sprite == null) {
+                    JPopupMenu buildPopup = new JPopupMenu();
+                    JMenuItem buildHQ = new JMenuItem("Build HQ");
+                    buildPopup.add(buildHQ);
+                    JMenuItem buildTranspore = new JMenuItem("Build Transpore");
+                    buildPopup.add(buildTranspore);
+                    JMenuItem buildInfector = new JMenuItem("Build Infector");
+                    buildPopup.add(buildInfector);
+                    buildPopup.show((Component) ug.display.getElement(), event.x, event.y);
+
+                    buildHQ.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            addHQ(event.x, event.y);
+                        }
+                    });
+                    buildTranspore.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            addTranspare(event.x, event.y);
+                        }
+                    });
+                    buildInfector.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            addInfector(event.x, event.y);
+                        }
+                    });
+                }
             }
         });
         registerPerFrameAction(new Runnable() {
