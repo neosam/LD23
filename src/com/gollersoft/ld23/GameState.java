@@ -34,6 +34,7 @@ public class GameState {
         waterProduction += 2;
     }
     public void transporeRemoved() {
+        System.out.println("Removed transpore");
         waterProduction -= 2;
     }
 
@@ -41,6 +42,7 @@ public class GameState {
         cheeseProduction += 2;
     }
     public void infectedTransporeRemoved() {
+        System.out.println("Removed infected");
         cheeseProduction -= 2;
     }
 

@@ -42,8 +42,6 @@ public class AntController implements Runnable {
                 gameScene.antAttack(antity);
                 antities.remove(antity);
             }
-
-            System.out.println(antity.antSprite.getPos());
         }
     }
 

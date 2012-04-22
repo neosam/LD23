@@ -155,6 +155,7 @@ public class GameScene extends UGScene {
 
         if (isNearOf(x, y, "infectedpore", 64)) {
             sprite.setAnimation("infected");
+            getSpritePool().getSpritePoolItem(sprite).getLabels().add("infected");
             state.infectedTransporeAdded();
         } else {
             state.transporeAdded();
@@ -181,6 +182,7 @@ public class GameScene extends UGScene {
             transporeCounter += size2;
             for (int j = 0; j < size2; j++) {
                 transpores.at(j).setAnimation("infected");
+                getSpritePool().getSpritePoolItem(transpores.at(j)).getLabels().add("infected");
             }
         }
         System.out.println("Infected " + transporeCounter + " transpores");
@@ -252,6 +254,65 @@ public class GameScene extends UGScene {
             if (label.equals("hq")) {
                 state.hqRemoved();
                 destroyMisplaced();
+            }
+            if (label.equals("transpore")) {
+                boolean isInfected = false;
+                for (int j = 0; j < size; j++) {
+                    final String label2 = labels.at(j);
+                    if (label2.equals("infected"))
+                        isInfected = true;
+                }
+                if (isInfected)
+                    state.infectedTransporeRemoved();
+                else
+                    state.transporeRemoved();
+            }
+            if (label.equals("infector")) {
+                System.out.println("infector removed");
+                UGList<UGSpritePoolItem> pores = getSpritePool().getSpritePoolItemsWithLabel("pore");
+                int size2 = pores.size();
+                for (int j = 0; j < size2; j++) {
+                    final UGFinalRect rect = pores.at(j).getSprite().getSpriteRect();
+                    if (!isNearOf(rect.x + rect.width / 2, rect.y + rect.height / 2, "infector", 64)) {
+                        pores.at(j).getLabels().remove("infectedpore");
+                        pores.at(j).getSprite().setAnimation("default");
+                    } else {
+                        pores.at(j).getLabels().add("infectedpore");
+                        pores.at(j).getSprite().setAnimation("infected");
+                    }
+                }
+                UGList<UGSpritePoolItem> transpores = getSpritePool().getSpritePoolItemsWithLabel("transpore");
+                int size3 = transpores.size();
+                for (int j = 0; j < size3; j++) {
+                    final UGFinalRect rect = transpores.at(j).getSprite().getSpriteRect();
+                    if (!isNearOf(rect.x + rect.width / 2, rect.y + rect.height / 2, "infectedpore", 64)) {
+                        UGList<String> transporeLabels = transpores.at(j).getLabels();
+                        for (int m = 0; m < transporeLabels.size(); m++) {     // OMG
+                            if (transporeLabels.at(m).equals("infected")) {
+                                transpores.at(j).getLabels().remove("infected");
+                                transpores.at(j).getSprite().setAnimation("default");
+                                state.infectedTransporeRemoved();
+                                state.transporeAdded();
+                            }
+                        }
+
+                    } else {
+                        UGList<String> transporeLabels = transpores.at(j).getLabels();
+                        boolean isInfected = false;
+                        for (int m = 0; m < transporeLabels.size(); m++) {     // OMG
+                            if (transporeLabels.at(m).equals("infected")) {
+                                isInfected = true;
+                                break;
+                            }
+                        }
+                        if (isInfected) {
+                            state.transporeRemoved();
+                            state.infectedTransporeAdded();
+                            transpores.at(j).getLabels().add("infected");
+                            transpores.at(j).getSprite().setAnimation("infected");
+                        }
+                    }
+                }
             }
         }
     }
