@@ -29,6 +29,7 @@ public class GameScene extends UGScene {
     private final UGSpriteLayer spriteLayer;
     private final UGImageScrollLayer backgroundLayer;
     private final GameState state;
+    private final int pores = 6;
 
 
     public GameScene(UG ug) {
@@ -60,6 +61,9 @@ public class GameScene extends UGScene {
         state.setCheese(10000);
         state.setWater(10000);
         addHQ(302, 250);
+
+        for (int i = 0; i < pores; i++)
+            addPore((int) (Math.random() * 700), (int) (Math.random() * 500));
     }
 
     public UGSprite createSprite(int x, int y, int animX, int animY, int animWidth, int animHeight, int animOffset,
