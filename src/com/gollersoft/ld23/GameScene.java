@@ -206,7 +206,7 @@ public class GameScene extends UGScene {
     public UGSprite getSpriteAt(int x, int y) {
         final UGSpritePool spritePool = getSpritePool();
         final int length = spritePool.size();
-        for (int i = 0; i < length; i++) {
+        for (int i = length - 1; i >= 0; i--) {
             final UGSprite sprite = spritePool.at(i);
             if (Collision.pointInRect(new UGFinalPoint(x, y), sprite.getSpriteRect()))
                 return sprite;
