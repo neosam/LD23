@@ -98,6 +98,7 @@ public class GameScene extends UGScene {
         state.setCheese(10000);
         state.setWater(10000);
         addHQ(302, 250);
+        addAnt(400, 400);
 
         for (int i = 0; i < pores; i++)
             addPore((int) (Math.random() * 700), (int) (Math.random() * 500));
@@ -171,6 +172,11 @@ public class GameScene extends UGScene {
         }
         System.out.println("Infected " + transporeCounter + " transpores");
         state.infectorAdded(transporeCounter);
+    }
+
+    public void addAnt(int x, int y) {
+        UGSprite sprite = createSprite(x, y, 0, 160, 32, 16, 0, 2, 3);
+        getSpritePool().getSpritePoolItem(sprite).getLabels().add("ant");
     }
 
     public UGSprite getSpriteAt(int x, int y) {
