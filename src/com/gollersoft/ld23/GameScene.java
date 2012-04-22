@@ -130,6 +130,10 @@ public class GameScene extends UGScene {
 
     public void addTranspare(int x, int y) {
         UGSprite sprite = createSprite(x, y, 64, 96, 32, 32, 0, 2, 10);
+        UGSpriteAnimation animation = new UGSpriteAnimation(new UGFinalRect(64, 128, 32, 32),
+                0, 2);
+        animation.setNext(10);
+        sprite.getAnimationStorage().put("infected", animation);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("transpore");
         sprite.setAnimation("default");
         state.transporeAdded();
@@ -148,10 +152,11 @@ public class GameScene extends UGScene {
             final UGList<UGSprite> transpores = spritesNearOf(poreX, poreY, "transpore", 64);
             final int size2 = transpores.size();
             transporeCounter += size2;
-            for (int j = 0; j < size; j++) {
-                /* Change animation todo */
+            for (int j = 0; j < size2; j++) {
+                transpores.at(j).setAnimation("infected");
             }
         }
+        System.out.println("Infected " + transporeCounter + " transpores");
         state.infectorAdded(transporeCounter);
     }
 
