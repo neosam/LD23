@@ -24,7 +24,7 @@ public class LD23 {
         final UGScene scene = new GameScene(ug);
 
 
-        final JFrame frame = new JFrame("Ludum Dare 23");
+        final JFrame frame = new JFrame("Ludum Dare 23: Athlete's foot");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add((Component) ug.display.getElement());
         frame.pack();

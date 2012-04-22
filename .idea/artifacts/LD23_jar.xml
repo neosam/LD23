@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LD23:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LD23_jar</output-path>
+    <root id="archive" name="LD23.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="LD23" />
+      <element id="module-output" name="JUltraGame" />
+      <element id="module-output" name="JUltraGameSwing" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/CodecJOgg.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/CodecJOrbis.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/CodecWav.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/LibraryJavaSound.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/SoundSystem.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
