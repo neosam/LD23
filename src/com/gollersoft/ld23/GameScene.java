@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,12 +60,15 @@ public class GameScene extends UGScene {
                         return;
                     JPopupMenu buildPopup = new JPopupMenu();
                     JMenuItem buildHQ = new JMenuItem("Build HQ");
+                    buildHQ.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0));
                     buildPopup.add(buildHQ);
                     if (isNearOf(event.x, event.y, "pore", 64)) {
                         JMenuItem buildTranspore = new JMenuItem("Build Transpore");
+                        buildTranspore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0));
                         buildPopup.add(buildTranspore);
                         JMenuItem buildInfector = new JMenuItem("Build Infector");
                         buildPopup.add(buildInfector);
+                        buildInfector.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0));
                         buildTranspore.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent actionEvent) {
