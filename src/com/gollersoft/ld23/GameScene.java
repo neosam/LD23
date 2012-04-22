@@ -126,6 +126,10 @@ public class GameScene extends UGScene {
     public void addPore(int x, int y) {
         UGSprite sprite = createSprite(x, y, 64, 64, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("pore");
+        UGSpriteAnimation animation = new UGSpriteAnimation(new UGFinalRect(96, 64, 32, 32),
+                0, 1);
+        sprite.getAnimationStorage().put("infected", animation);
+
     }
 
     public void addTranspare(int x, int y) {
@@ -136,7 +140,14 @@ public class GameScene extends UGScene {
         sprite.getAnimationStorage().put("infected", animation);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("transpore");
         sprite.setAnimation("default");
-        state.transporeAdded();
+
+        if (isNearOf(x, y, "infectedpore", 64)) {
+            sprite.setAnimation("infected");
+            state.infectedTransporeAdded();
+        } else {
+            state.transporeAdded();
+        }
+
     }
 
     public void addInfector(int x, int y) {
@@ -146,6 +157,8 @@ public class GameScene extends UGScene {
         final int size = pores.size();
         int transporeCounter = 0;
         for (int i = 0; i < size; i++) {
+            pores.at(i).setAnimation("infected");
+            getSpritePool().getSpritePoolItem(pores.at(i)).getLabels().add("infectedpore");
             final UGFinalRect rect = pores.at(i).getSpriteRect();
             final int poreX = rect.x + rect.width / 2;
             final int poreY = rect.y + rect.height / 2;
