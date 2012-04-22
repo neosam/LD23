@@ -24,9 +24,9 @@ public class StateDisplayLayer implements UGLayer {
     public void draw(UGGraphics g) {
         g.fillRect(0, 0, 800, 24, rectColor);
         g.drawString("Cheese: " + gameState.getCheese(), 10, 10, color);
-        g.drawString("Water: " + gameState.getWater(), 100, 10, color);
+        g.drawString("Water: " + gameState.getWater(), 200, 10, color);
         g.drawString("Usage: " + gameState.getCheeseProduction() * 30, 10, 20, color);
-        g.drawString("Usage: " + gameState.getWaterProduction() * 30, 100, 20, color);
+        g.drawString("Usage: " + gameState.getWaterProduction() * 30, 200, 20, color);
 
     }
 
