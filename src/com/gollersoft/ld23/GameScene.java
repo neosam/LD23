@@ -48,6 +48,7 @@ public class GameScene extends UGScene {
         addLayer(new BuildAreaLayer(getSpritePool()));
         addLayer(spriteLayer);
         addLayer(new StateDisplayLayer(state));
+        addLayer(new GameOverLayer(state, this));
         new SpriteAnimator().register(this);
         ug.setMouseDelegate(new UGMouseDelegate() {
             @Override
