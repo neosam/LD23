@@ -15,6 +15,8 @@ public class AntController implements Runnable {
     final private UGList<Antity> antities;
     final private GameScene gameScene;
     final long starttime;
+    int levelupSpeed = 10000;
+    int amountOfAnts = 500;
 
     public AntController(UG ug, GameScene gameScene) {
         this.gameScene = gameScene;
@@ -49,12 +51,12 @@ public class AntController implements Runnable {
     }
 
     public void maybeAddAnAnt() {
-        long timePlayed = (System.currentTimeMillis() - starttime) / 3000;
-        if (timePlayed > (int)(Math.random() * 7000)) {
+        long timePlayed = (System.currentTimeMillis() - starttime) / levelupSpeed;
+        if (timePlayed > (int)(Math.random() * amountOfAnts)) {
             String dest = "transpore";
-            if (Math.random() > 0.5)
+            if (Math.random() > 0.9)
                 dest = "hq";
-            else if (Math.random() > 0.5)
+            else if (Math.random() > 0.9)
                 dest = "infector";
             UGList<UGSpritePoolItem> possibleGoals = gameScene.getSpritePool().getSpritePoolItemsWithLabel(dest);
             if (possibleGoals.size() == 0)
