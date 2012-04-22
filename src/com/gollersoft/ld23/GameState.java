@@ -22,12 +22,12 @@ public class GameState {
     }
 
     public void hqAdded() {
-        waterProduction -= 1;
-        cheeseProduction -= 1;
+        waterProduction -= 10;
+        cheeseProduction -= 10;
     }
     public void hqRemoved() {
-        waterProduction += 1;
-        cheeseProduction += 1;
+        waterProduction += 10;
+        cheeseProduction += 10;
     }
 
     public void transporeAdded() {
