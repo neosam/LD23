@@ -89,8 +89,14 @@ public class GameScene extends UGScene {
 
                 }
                 else {
-                    if (event.button == 2)
-                        removeSprite(sprite, false);
+                    if (event.button == 2) {
+                        UGList<String> labels = getSpritePool().getSpritePoolItem(sprite).getLabels();
+                        for (int i = 0; i < labels.size(); i++)
+                            if (labels.at(i).equals("hq")
+                                    || labels.at(i).equals("transpore")
+                                    || labels.at(i).equals("infector"))
+                                removeSprite(sprite, false);
+                    }
                 }
             }
         });
