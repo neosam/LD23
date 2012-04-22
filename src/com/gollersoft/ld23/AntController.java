@@ -50,10 +50,17 @@ public class AntController implements Runnable {
 
     public void maybeAddAnAnt() {
         long timePlayed = (System.currentTimeMillis() - starttime) / 10000;
-        if (timePlayed > (int)(Math.random() * 10000)) {
-            UGList<UGSpritePoolItem> possibleGoals = gameScene.getSpritePool().getSpritePoolItemsWithLabel("hq");
-            UGSprite dest = possibleGoals.at((int) (Math.random() * possibleGoals.size())).getSprite();
-            gameScene.addAnt(-20, -20, dest);
+        if (timePlayed > (int)(Math.random() * 1000)) {
+            String dest = "transpore";
+            if (Math.random() > 0.5)
+                dest = "hq";
+            else if (Math.random() > 0.5)
+                dest = "infector";
+            UGList<UGSpritePoolItem> possibleGoals = gameScene.getSpritePool().getSpritePoolItemsWithLabel(dest);
+            if (possibleGoals.size() == 0)
+                return;
+            UGSprite destSprite = possibleGoals.at((int) (Math.random() * possibleGoals.size())).getSprite();
+            gameScene.addAnt(-20, -20, destSprite);
         }
     }
 
