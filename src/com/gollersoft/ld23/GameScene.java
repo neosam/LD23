@@ -106,7 +106,6 @@ public class GameScene extends UGScene {
         state.setCheese(10000);
         state.setWater(10000);
         addHQ(302, 250);
-        addAnt(-20, -20, getSpritePool().at(0));
 
         for (int i = 0; i < pores; i++)
             addPore((int) (Math.random() * 700), (int) (Math.random() * 500));
@@ -245,6 +244,8 @@ public class GameScene extends UGScene {
 
     private void removeSprite(UGSprite destination, boolean explosion) {
         UGSpritePoolItem item = getSpritePool().getSpritePoolItem(destination);
+        if (item == null)
+            return;
         UGList<String> labels = item.getLabels();
         spriteLayer.remove(destination);
         getSpritePool().remove(destination);

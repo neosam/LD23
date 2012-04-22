@@ -1,6 +1,8 @@
 package com.gollersoft.ld23;
 
 import com.gollersoft.jultragame.core.*;
+import com.gollersoft.jultragame.scene.UGSpritePoolItem;
+import com.gollersoft.jultragame.sprite.UGSprite;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,17 +14,17 @@ import com.gollersoft.jultragame.core.*;
 public class AntController implements Runnable {
     final private UGList<Antity> antities;
     final private GameScene gameScene;
+    final long starttime;
 
     public AntController(UG ug, GameScene gameScene) {
         this.gameScene = gameScene;
         antities = ug.createList();
-
+        starttime = System.currentTimeMillis();
     }
 
     @Override
     public void run() {
-        final int size = antities.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < antities.size(); i++) {
             final Antity antity = antities.at(i);
             final UGFinalRect destRect = antity.destination.getSpriteRect();
             final UGFinalPoint destPos = new UGFinalPoint(destRect.x + destRect.width / 2,
@@ -42,6 +44,16 @@ public class AntController implements Runnable {
                 gameScene.antAttack(antity);
                 antities.remove(antity);
             }
+        }
+        maybeAddAnAnt();
+    }
+
+    public void maybeAddAnAnt() {
+        long timePlayed = (System.currentTimeMillis() - starttime) / 10000;
+        if (timePlayed > (int)(Math.random() * 10000)) {
+            UGList<UGSpritePoolItem> possibleGoals = gameScene.getSpritePool().getSpritePoolItemsWithLabel("hq");
+            UGSprite dest = possibleGoals.at((int) (Math.random() * possibleGoals.size())).getSprite();
+            gameScene.addAnt(-20, -20, dest);
         }
     }
 
