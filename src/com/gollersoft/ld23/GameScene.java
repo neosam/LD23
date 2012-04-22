@@ -138,6 +138,21 @@ public class GameScene extends UGScene {
     public void addInfector(int x, int y) {
         UGSprite sprite = createSprite(x, y, 0, 128, 32, 32, 0, 1, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("infector");
+        UGList<UGSprite> pores = spritesNearOf(x, y, "pore", 64);
+        final int size = pores.size();
+        int transporeCounter = 0;
+        for (int i = 0; i < size; i++) {
+            final UGFinalRect rect = pores.at(i).getSpriteRect();
+            final int poreX = rect.x + rect.width / 2;
+            final int poreY = rect.y + rect.height / 2;
+            final UGList<UGSprite> transpores = spritesNearOf(poreX, poreY, "transpore", 64);
+            final int size2 = transpores.size();
+            transporeCounter += size2;
+            for (int j = 0; j < size; j++) {
+                /* Change animation todo */
+            }
+        }
+        state.infectorAdded(transporeCounter);
     }
 
     public UGSprite getSpriteAt(int x, int y) {
@@ -164,5 +179,21 @@ public class GameScene extends UGScene {
                 return true;
         }
         return false;
+    }
+
+    public UGList<UGSprite> spritesNearOf(int x, int y, String label, int radius) {
+        final UGList<UGSprite> res = ug.createList();
+        final UGList<UGSpritePoolItem> sprites = getSpritePool().getSpritePoolItemsWithLabel(label);
+        final int size = sprites.size();
+        for (int i = 0; i < size; i++) {
+            final UGSprite sprite = sprites.at(i).getSprite();
+            final int spriteX = sprite.getSpriteRect().x + sprite.getSpriteRect().width / 2;
+            final int spriteY = sprite.getSpriteRect().y + sprite.getSpriteRect().height / 2;
+            final int diffX = x - spriteX;
+            final int diffY = y - spriteY;
+            if (diffX * diffX + diffY * diffY < radius * radius)
+                res.add(sprite);
+        }
+        return res;
     }
 }

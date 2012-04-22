@@ -30,6 +30,10 @@ public class GameState {
         waterProduction += 2;
     }
 
+    public void infectorAdded(int transformedTranspored) {
+        waterProduction -= 2 * transformedTranspored;
+        cheeseProduction += 2 * transformedTranspored;
+    }
 
     public int getCheese() {
         return cheese;
