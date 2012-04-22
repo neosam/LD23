@@ -129,6 +129,7 @@ public class GameScene extends UGScene {
         UGSprite sprite = createSprite(x, y, 64, 96, 32, 32, 0, 2, 10);
         getSpritePool().getSpritePoolItem(sprite).getLabels().add("transpore");
         sprite.setAnimation("default");
+        state.transporeAdded();
     }
 
     public void addInfector(int x, int y) {

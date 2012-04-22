@@ -26,6 +26,10 @@ public class GameState {
         cheeseProduction -= 1;
     }
 
+    public void transporeAdded() {
+        waterProduction += 2;
+    }
+
 
     public int getCheese() {
         return cheese;
