@@ -97,7 +97,8 @@ public class GameScene extends UGScene {
             @Override
             public void run() {
                 state.step();
-                state.addScore(getSpritePool().getSpritePoolItemsWithLabel("hq").size());
+                if (state.getCheese() > 0 && state.getWater() > 0)
+                    state.addScore(getSpritePool().getSpritePoolItemsWithLabel("hq").size());
             }
         });
 
